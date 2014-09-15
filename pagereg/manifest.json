@@ -1,0 +1,13 @@
+{
+	"name":"PageReg",
+	"version":"1.0",
+	"manifest_version":2,
+	"description":"Recgonize the channel of the page",
+	"browser_action":{
+		"default_icon":"pagereg.png",
+		"default_popup":"popup.html"
+	},
+	"permissions":["http://*/*","tabs"],
+	"background":{"scripts":["background.js"]}
+	
+}
