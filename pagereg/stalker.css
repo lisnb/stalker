@@ -1,9 +1,8 @@
 #stalker{
     font-family: 微软雅黑;
-    margin-top: 100px;
     float:right;
     margin-right: 20px;
-    z-index: 2000;
+    z-index: 2000000;
 }
 .nav {
 
@@ -23,7 +22,7 @@
 .nav span:hover{
     color: rgba(255,255,255,.8);
 }
-.btn {
+#stalkersubmit {
     display: block;
     margin-top: 10px;
     width: 100px;
@@ -38,6 +37,6 @@
     margin-left: 5px;
     cursor: pointer;
 }
-.btn:hover {
+#stalkersubmit:hover {
     background: rgba(0, 137, 108, .8);
 }
