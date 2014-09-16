@@ -8,6 +8,10 @@
 		"default_popup":"popup.html"
 	},
 	"permissions":["http://*/*","tabs"],
-	"background":{"scripts":["background.js"]}
-	
+	"background":{"scripts":["background.js"]},
+	"content_scripts":[{
+		"css":["stalker.css"],
+		"js":["jquery.min.js","jquery.pin.min.js","stalker.js"],
+		"matches":["http://*/*","https://*/*"]
+	}]
 }
