@@ -40,22 +40,14 @@ function Stalk() {
                 "url": url
             }
             var jdata = JSON.stringify(data)
-            $.aja:x({
-                url: server,
-                jsonp: 'callback',
-                jsonpCallback:"_success_callback",
-                type: 'POST',
-                dataType: 'jsonp',
-                data: jdata,
-                success: function(response) {
-                    alert(response['url'])
-                    recorded = true
-                },
-                error: function(XHR, textStatus, errorThrown) {
-                    alert("error: " + textStatus);
-                    alert("error: " + errorThrown);
+            var xhr = new XMLHttpRequest();
+            xhr.open('POST', server, "true")
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState == 4) {
+                    alert(xhr.responseText);
                 }
-            })
+            }
+            xhr.send(jdata);
         }
 
     }
