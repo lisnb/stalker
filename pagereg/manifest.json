@@ -4,14 +4,26 @@
 	"manifest_version":2,
 	"description":"Recgonize the channel of the page",
 	"browser_action":{
-		"default_icon":"pagereg.png",
+		"default_icon": {
+         "19": "icons/stalker19.png",
+         "38": "icons/stalker76.png"
+      	},
 		"default_popup":"popup.html"
 	},
-	"permissions":["http://*/*","tabs"],
+	"icons": {
+      
+      "16": "icons/stalker16.png",
+      "19": "icons/stalker19.png",
+      "38": "icons/stalker76.png",
+      "48": "icons/stalker48.png",
+      "128": "icons/stalker128.png"
+
+   },
+	"permissions":["http://*/*","tabs","https://*/*","file:///*/*"],
 	"background":{"scripts":["background.js"]},
 	"content_scripts":[{
 		"css":["stalker.css"],
 		"js":["jquery.min.js","jquery-ui.min.js","stalker.js"],
-		"matches":["http://*/*","https://*/*"]
+		"matches":["http://*/*","https://*/*","file:///*/*"]
 	}]
 }

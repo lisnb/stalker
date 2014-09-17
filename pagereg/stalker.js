@@ -5,7 +5,7 @@ function Stalk() {
     var recorded = false
 
     function initialChannel() {
-        var bbs = ['bbs'];
+        var bbs = ['bbs','forum','thread'];
         var blog = ['blog'];
         var news = ['news'];
         var selector = '';
