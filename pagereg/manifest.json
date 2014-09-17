@@ -11,7 +11,7 @@
 	"background":{"scripts":["background.js"]},
 	"content_scripts":[{
 		"css":["stalker.css"],
-		"js":["jquery.min.js","stalker.js"],
+		"js":["jquery.min.js","jquery-ui.min.js","stalker.js"],
 		"matches":["http://*/*","https://*/*"]
 	}]
 }
