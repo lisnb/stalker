@@ -2,6 +2,7 @@ var server = "http://172.22.0.24/stalker-lixipeng/pagereg/stalker.php"
 
 function Stalk() {
     var url = document.URL
+    var recorded = false
 
     function initialChannel() {
         var bbs = ['bbs'];
@@ -11,11 +12,9 @@ function Stalk() {
         for (var i = bbs.length - 1; i >= 0; i--) {
             if (url.indexOf(bbs[i]) != -1) {
                 if (url.indexOf('.html') != -1) {
-                	$('input[name="channel"][value="bbs"]').attr("checked", "true")
-                }
-                else
-                {
-                	$('input[name="channel"][value="bbs_board"]').attr("checked", "true")
+                    $('input[name="channel"][value="bbs"]').attr("checked", "true")
+                } else {
+                    $('input[name="channel"][value="bbs_board"]').attr("checked", "true")
                 }
                 return
             }
@@ -23,11 +22,9 @@ function Stalk() {
         for (var i = blog.length - 1; i >= 0; i--) {
             if (url.indexOf(blog[i]) != -1) {
                 if (url.indexOf('.html') != -1) {
-                	$('input[name="channel"][value="blog"]').attr("checked", "true")
-                }
-                else
-                {
-                	$('input[name="channel"][value="blog_board"]').attr("checked", "true")
+                    $('input[name="channel"][value="blog"]').attr("checked", "true")
+                } else {
+                    $('input[name="channel"][value="blog_board"]').attr("checked", "true")
                 }
                 return
             }
@@ -35,18 +32,13 @@ function Stalk() {
         for (var i = news.length - 1; i >= 0; i--) {
             if (url.indexOf(news[i]) != -1) {
                 if (url.indexOf('.html') != -1) {
-                	$('input[name="channel"][value="news"]').attr("checked", "true")
-                }
-                else
-                {
-                	$('input[name="channel"][value="news_board"]').attr("checked", "true")
+                    $('input[name="channel"][value="news"]').attr("checked", "true")
+                } else {
+                    $('input[name="channel"][value="news_board"]').attr("checked", "true")
                 }
                 return
             }
         };
-
-
-
         $('input[name="channel"][value="other"]').attr("checked", "true")
     }
 
@@ -62,31 +54,11 @@ function Stalk() {
             '<label><input type="radio" name="channel" value="bbs_board"><span>论坛索引<\/span><\/label>',
             '<label><input type="radio" name="channel" value="other"><span>其他页面<\/span><\/label>',
             '<a class="btn" id="stalkersubmit" >Submit<\/a>',
-            '<\/div>' //,
-            //          '<script>',
-            // '$(function() {',
-            // 'var elm = $("#stalker");',
-            // 'var startPos = elm.offset().top;',
-            // '$(window).on("scroll", function () {',
-            // 'var p = $(window).scrollTop();',
-            // '$(elm).css("position", ((p) > startPos) ? "fixed" : "static");',
-            // '$(elm).css("top", ((p) > startPos) ? "0px" : "");',
-            // '})',
-            // '});',
-            //          '<\/script>'
+            '<\/div>'
         ]
-        
+
         $('body').append(serveyhtml.join(""))
-
     }
-
-    addServey()
-    initialChannel()
-
-    $("#stalker").draggable()
-
-    var recorded = false
-    var submit = $("#stalkersubmit")
 
     function postChannel() {
         if (!recorded) {
@@ -109,31 +81,38 @@ function Stalk() {
             }
             xhr.send(jdata);
         }
-
     }
 
+    function buildListener(target) {
+        target.click(postChannel)
+        target.mouseenter(function() {
+            target.animate({
+                "font-size": "+=1"
+            }, "fast")
+        })
+        target.mouseout(function() {
+            target.animate({
+                "font-size": "-=1"
+            }, "fast")
+        })
+        target.mousedown(function() {
+            target.animate({
+                "margin-top": "+=2px"
+            })
+        })
+        target.mouseup(function() {
+            target.animate({
+                "margin-top": "-=2px"
+            })
+        })
+    }
 
-    submit.click(postChannel)
-    submit.mouseenter(function() {
-        submit.animate({
-            "font-size": "+=1"
-        }, "fast")
-    })
-    submit.mouseout(function() {
-        submit.animate({
-            "font-size": "-=1"
-        }, "fast")
-    })
-    submit.mousedown(function() {
-        submit.animate({
-            "margin-top": "+=2px"
-        })
-    })
-    submit.mouseup(function() {
-        submit.animate({
-            "margin-top": "-=2px"
-        })
-    })
+    addServey()
+    initialChannel()
+    $("#stalker").draggable()
+    var submit = $("#stalkersubmit")
+    buildListener(submit)
+
 }
 
 Stalk()
