@@ -113,6 +113,18 @@ function Stalk() {
     var submit = $("#stalkersubmit")
     buildListener(submit)
 
-}
 
-Stalk()
+}
+chrome.storage.local.get("turn",function(value){
+     
+        console.log("stalker:"+value.turn)
+        if(value.turn !="off"){
+               Stalk()
+        }
+    })
+
+// if(window.localStorage['turn']=='on'){
+//     alert(window.localStorage['turn'])
+//     Stalk()
+// }
+    

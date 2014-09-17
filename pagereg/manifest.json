@@ -7,8 +7,7 @@
 		"default_icon": {
          "19": "icons/stalker19.png",
          "38": "icons/stalker76.png"
-      	},
-		"default_popup":"popup.html"
+      	}
 	},
 	"icons": {
       
@@ -19,7 +18,7 @@
       "128": "icons/stalker128.png"
 
    },
-	"permissions":["http://*/*","tabs","https://*/*","file:///*/*"],
+	"permissions":["http://*/*","tabs","https://*/*","file:///*/*","storage"],
 	"background":{"scripts":["background.js"]},
 	"content_scripts":[{
 		"css":["stalker.css"],

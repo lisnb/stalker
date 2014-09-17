@@ -1,18 +1,22 @@
-/* 
-* @Author: LiSnB
-* @Date:   2014-08-14 17:34:22
-* @Last Modified by:   LiSnB
-* @Last Modified time: 2014-08-14 17:47:55
-*/
-
-var url="window.location.href";
-
-
-function getUrl(tabId, changeInfo, tab){
-
-	// alert("xixixixixi");
-	url = tab.url;
-	// alert(url);
+function toggle() {
+    chrome.storage.local.get('turn', function(value) {
+        if (value.turn == 'off') {
+            chrome.storage.local.set({
+                "turn": "on"
+            })
+            chrome.browserAction.setIcon({
+                path: "icons/stalker48.png"
+            });
+        } else {
+            chrome.storage.local.set({
+                "turn": "off"
+            })
+            chrome.browserAction.setIcon({
+                path: "icons/stalkeroff.png"
+            });
+        }
+        console.log('now: '+value.turn)
+    })
 }
 
-chrome.tabs.onUpdated.addListener(getUrl);
+chrome.browserAction.onClicked.addListener(toggle);
