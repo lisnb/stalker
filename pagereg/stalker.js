@@ -12,40 +12,52 @@ function Stalk() {
             '<label><input type="radio" name="channel" value="bbs_detail"><span>论坛索引<\/span><\/label>',
             '<label><input type="radio" name="channel" value="other" checked><span>其他页面<\/span><\/label>',
             '<a class="btn" id="stalkersubmit" >Submit<\/a>',
-            '<\/div>',
-            '<script>',
-			'$(function() {',
-			'var elm = $("#stalker");',
-			'var startPos = elm.offset().top;',
-			'$(window).on("scroll", function () {',
-			'var p = $(window).scrollTop();',
-			'$(elm).css("position", ((p) > startPos) ? "fixed" : "static");',
-			'$(elm).css("top", ((p) > startPos) ? "0px" : "");',
-			'})',
-			'});',
-            '<\/script>'
+            '<\/div>' //,
+            //          '<script>',
+            // '$(function() {',
+            // 'var elm = $("#stalker");',
+            // 'var startPos = elm.offset().top;',
+            // '$(window).on("scroll", function () {',
+            // 'var p = $(window).scrollTop();',
+            // '$(elm).css("position", ((p) > startPos) ? "fixed" : "static");',
+            // '$(elm).css("top", ((p) > startPos) ? "0px" : "");',
+            // '})',
+            // '});',
+            //          '<\/script>'
         ]
+        var stalkerdiv = document.createElement('div')
         $('body').append(serveyhtml.join(""))
     }
 
+    var recorded = false
+
     function postChannel() {
-        var channel = $('input[name="channel"]:checked').val()
-        var url = document.URL
-        var data = {
-            'channel': channel,
-            'url': url
-        }
-        var jdata = JSON.stringify(data)
-        $.ajax({
-            url: server,
-            jsonp: 'callback',
-            type: 'POST',
-            dataType: 'jsonp',
-            data: data,
-            success: function(response) {
-                alert(response['url'])
+        if (!recorded) {
+            var channel = $('input[name="channel"]:checked').val()
+            var url = document.URL
+            var data = {
+                "channel": channel,
+                "url": url
             }
-        })
+            var jdata = JSON.stringify(data)
+            $.aja:x({
+                url: server,
+                jsonp: 'callback',
+                jsonpCallback:"_success_callback",
+                type: 'POST',
+                dataType: 'jsonp',
+                data: jdata,
+                success: function(response) {
+                    alert(response['url'])
+                    recorded = true
+                },
+                error: function(XHR, textStatus, errorThrown) {
+                    alert("error: " + textStatus);
+                    alert("error: " + errorThrown);
+                }
+            })
+        }
+
     }
 
     addServey()
