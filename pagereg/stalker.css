@@ -1,5 +1,5 @@
 #stalker{
-    font-family: 微软雅黑;
+    font-family: 'Segoe UI', Arial, 'Microsoft Yahei', Simsun, sans-serif;
     float:right;
     position: fixed;
     z-index: 5555;
@@ -40,6 +40,7 @@
     border-radius: 5px;
     margin-left: 5px;
     cursor: pointer;
+    position: relative;
 }
 #stalkersubmit:hover {
     background: rgba(0, 137, 108, .8);

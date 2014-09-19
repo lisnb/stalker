@@ -3,43 +3,49 @@ var server = "http://172.22.0.24/stalker-lixipeng/pagereg/stalker.php"
 function Stalk() {
     var url = document.URL
     var recorded = false
+    var closeImmediately = false
+
+    var bbs = ['bbs','forum','thread'];
+    var blog = ['blog'];
+    var news = ['news'];
+    var detail = ['html','shtml','htm']
+    var keywords = {
+        'bbs':bbs,
+        'blog':blog,
+        'news':news
+    }
+
+
+    function inKeywords(token,kws){
+        for (var i = kws.length - 1; i >= 0; i--) {
+            if(token.indexOf(kws[i])!=-1){
+                return true
+            }
+        };
+        return false
+    }
+
+    function getUrlBasedChannel(){
+        var board = inKeywords(url,detail)?"":"_board"
+        var channel = "other"
+        for (ch in keywords){
+            if (inKeywords(url,keywords[ch])){
+                channel = ch
+            }
+        }
+        if (channel!="other"){
+            channel+=board
+        }
+        console.log("channel: "+channel)
+        return channel
+    }
 
     function initialChannel() {
-        var bbs = ['bbs','forum','thread'];
-        var blog = ['blog'];
-        var news = ['news'];
-        var selector = '';
-        for (var i = bbs.length - 1; i >= 0; i--) {
-            if (url.indexOf(bbs[i]) != -1) {
-                if (url.indexOf('.html') != -1) {
-                    $('input[name="channel"][value="bbs"]').attr("checked", "true")
-                } else {
-                    $('input[name="channel"][value="bbs_board"]').attr("checked", "true")
-                }
-                return
-            }
-        };
-        for (var i = blog.length - 1; i >= 0; i--) {
-            if (url.indexOf(blog[i]) != -1) {
-                if (url.indexOf('.html') != -1) {
-                    $('input[name="channel"][value="blog"]').attr("checked", "true")
-                } else {
-                    $('input[name="channel"][value="blog_board"]').attr("checked", "true")
-                }
-                return
-            }
-        };
-        for (var i = news.length - 1; i >= 0; i--) {
-            if (url.indexOf(news[i]) != -1) {
-                if (url.indexOf('.html') != -1) {
-                    $('input[name="channel"][value="news"]').attr("checked", "true")
-                } else {
-                    $('input[name="channel"][value="news_board"]').attr("checked", "true")
-                }
-                return
-            }
-        };
-        $('input[name="channel"][value="other"]').attr("checked", "true")
+        
+        var selector = '$(\'input[name="channel"][value="'+ getUrlBasedChannel()+ '"]\')';
+        //console.log(selector)
+        //console.log($('input[name="channel"][value="'+ getUrlBasedChannel()+ '"]'))
+        $('input[name="channel"][value="'+ getUrlBasedChannel()+ '"]').attr("checked","true")
     }
 
     function addServey() {
@@ -60,6 +66,10 @@ function Stalk() {
         $('body').append(serveyhtml.join(""))
     }
 
+    function closeStalker(){
+        $("#stalker").fadeOut("slow")
+    }
+
     function postChannel() {
         if (!recorded) {
             var channel = $('input[name="channel"]:checked').val()
@@ -76,7 +86,11 @@ function Stalk() {
                     //alert(xhr.responseText);
                     recorded = true;
                     console.log(xhr.responseText)
-                    $("#stalker").fadeOut("slow")
+                    $("#stalkersubmit").text("已提交")
+                    setTimeout(function(){
+                        $("#stalker").fadeTo("slow",closeImmediately?0:0.5)
+                    },700)
+                    
                 }
             }
             xhr.send(jdata);
@@ -113,7 +127,6 @@ function Stalk() {
     var submit = $("#stalkersubmit")
     buildListener(submit)
 
-
 }
 chrome.storage.local.get("turn",function(value){
      
@@ -123,8 +136,3 @@ chrome.storage.local.get("turn",function(value){
         }
     })
 
-// if(window.localStorage['turn']=='on'){
-//     alert(window.localStorage['turn'])
-//     Stalk()
-// }
-    
